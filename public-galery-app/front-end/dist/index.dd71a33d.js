@@ -1,0 +1,2 @@
+const a=$("#overlay"),e=$("#btn-upload");(function(){let a=$.ajax("http://localhost:8080/gallery/images");a.done(a=>{a.forEach(a=>{let e=$('<div class="image"></div>');e.css("background-image",`url(${a})`),$("main").append(e)})})})(),e.on("click",()=>a.removeClass("d-none")),a.on("click",e=>{e.target===a[0]&&a.addClass("d-none")}),$(document).on("keydown",e=>{"Escape"===e.key&&a.addClass("d-none")});
+//# sourceMappingURL=index.dd71a33d.js.map

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/public-galery-app/back-end/back-end.iml" filepath="$PROJECT_DIR$/public-galery-app/back-end/back-end.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../projects/pos-system/front-end/front-end.iml" filepath="$PROJECT_DIR$/../projects/pos-system/front-end/front-end.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/public-galery.iml" filepath="$PROJECT_DIR$/.idea/public-galery.iml" />
+    </modules>
+  </component>
+</project>
