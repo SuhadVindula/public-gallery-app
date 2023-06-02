@@ -3,6 +3,9 @@ package lk.ijse.dep10;
 import lk.ijse.dep10.WebAppConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
+
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -17,5 +20,14 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+
+    //enabling file upload in spring because it is not defaulty avalbele
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        var tempDir = System.getProperty("java.io.tmpdir");
+        MultipartConfigElement multipartConfigElement= new MultipartConfigElement(tempDir);
+        registration.setMultipartConfig(multipartConfigElement);
     }
 }
