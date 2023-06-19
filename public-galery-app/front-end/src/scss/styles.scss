@@ -62,6 +62,9 @@ main>.image>div>svg {
   display: flex;
   justify-content: center;
   align-content: center;
+  border-radius: 10px;
+  border: 1px solid black;
+
   .lds-facebook {
     display: inline-block;
     position: relative;
@@ -103,5 +106,6 @@ main>.image>div>svg {
       height: 32px;
     }
   }
+
 
 }

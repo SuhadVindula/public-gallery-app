@@ -35,11 +35,38 @@ dropZoneElm.on('drop',(evt)=>{
 
 });
 
+mainElm.on('click', '.image:not(.loader)',(evt)=>{
+    evt.target.requestFullscreen();
+});
+
 function uploadImages(imageFiles) {
+    const formData = new FormData();
     imageFiles.forEach(imageFile=>{
-        const divElm = $(`<div class="image"></div>`);
+        const divElm = $(`<div class="image loader"></div>`);
+        divElm.append(cssLoaderHtml);
         mainElm.append(divElm);
-    })
+
+        formData.append("images", imageFile);
+    });
+   const jqxhr = $.ajax((`${REST_API_URL}/images`,{
+        method: 'POST',
+        data:formData,
+        contentType: false, //by default jquery uses application/x-www-form-urlencoded
+        processData: false  //by default jQuery tries to convert the data into String
+    }));
+    jqxhr.done((imgUrlList)=>{
+        imgUrlList.forEach(url=>{
+            const divElm = $('.image.loader').first();
+            divElm.css('background-image',`url('${imageUrl}`);
+            divElm.empty();
+            divElm.removeClass('loader');
+
+        })
+    });
+
+    jqxhr.fail(()=>{
+        $(".image.loader").remove();
+    });
 }
 overlay.on('dragover', (evt) => evt.preventDefault());
 overlay.on('drop', (evt) => evt.preventDefault());

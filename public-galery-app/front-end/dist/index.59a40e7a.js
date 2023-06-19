@@ -600,10 +600,33 @@ dropZoneElm.on("drop", (evt)=>{
     overlay.addClass("d-nome");
     uploadImages(imageFiles);
 });
+mainElm.on("click", ".image:not(.loader)", (evt)=>{
+    evt.target.requestFullscreen();
+});
 function uploadImages(imageFiles) {
+    const formData = new FormData();
     imageFiles.forEach((imageFile)=>{
-        const divElm = $(`<div class="image"></div>`);
+        const divElm = $(`<div class="image loader"></div>`);
+        divElm.append(cssLoaderHtml);
         mainElm.append(divElm);
+        formData.append("images", imageFile);
+    });
+    const jqxhr = $.ajax({
+        method: "POST",
+        data: formData,
+        contentType: false,
+        processData: false //by default jQuery tries to convert the data into String
+    });
+    jqxhr.done((imgUrlList)=>{
+        imgUrlList.forEach((url)=>{
+            const divElm = $(".image.loader").first();
+            divElm.css("background-image", `url('${imageUrl}`);
+            divElm.empty();
+            divElm.removeClass("loader");
+        });
+    });
+    jqxhr.fail(()=>{
+        $(".image.loader").remove();
     });
 }
 overlay.on("dragover", (evt)=>evt.preventDefault());
@@ -611,7 +634,7 @@ overlay.on("drop", (evt)=>evt.preventDefault());
 function loadAllImages() {
     const jqxhr = $.ajax(`${REST_API_URL}/images`);
     jqxhr.done((imageUrlList)=>{
-        imageUrlList.forEach((imageUrl)=>{
+        imageUrlList.forEach((imageUrl1)=>{
             const divElm = $(`<div class="image">
                                  <div class="d-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-down" viewBox="0 0 16 16">
@@ -620,7 +643,7 @@ function loadAllImages() {
                                     </svg>
                                  </div>  
                                </div>`);
-            divElm.css("background-image", `url(${imageUrl})`);
+            divElm.css("background-image", `url(${imageUrl1})`);
             $("main").prepend(divElm);
         });
     });
